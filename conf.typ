@@ -13,6 +13,21 @@
         size: 10pt
     )
 
+    set page(
+        paper: "a4",
+        header: [
+            #set text(10pt)
+            #smallcaps[#student]
+            #h(1fr) #homework
+        ],
+        numbering: "1 / 1",
+        background: rotate(45deg,
+            text(80pt, fill: rgb("fde7e4"))[
+                #student
+            ]
+        )
+    )
+
     set align(center)
 
     text(22pt, weight: "bold", [
@@ -31,26 +46,9 @@
         \ #student #h(1cm) #id
     ]))
 
-    set page(
-        paper: "a4",
-        header: [
-            #set text(10pt)
-            #smallcaps[#student]
-            #h(1fr) #homework
-        ],
-        numbering: "1 / 1",
-        background: rotate(24deg,
-            text(18pt, fill: rgb("FFCBC4"))[
-                #student
-            ]
-        )
-    )
-
     set par(justify: true)
 
     set align(left)
-
-    // show: rest => columns(2, rest)
 
     show math.equation.where(block: false): it => {
         if it.has("label") and it.label == label("displayed-inline-math-equation") {
@@ -61,39 +59,12 @@
     }
 
     show raw.where(block: true): block.with(
-        fill: rgb("#fbe6e3"),
+        fill: luma(200, 40%),
         inset: 10pt,
-        // radius: 5pt,
+        radius: 4pt,
     )
 
     doc
-
-    // show heading.where(level: 1): it => block(width: 100%)[
-    //     #set align(center)
-    //     #set text(size: 12pt, weight: "regular")
-    //     #block(smallcaps(it.body))
-    // ]
-    // show heading.where(level: 2): it => text(
-    //     size: 11pt,
-    //     weight: "regular",
-    //     style: "italic",
-    //     it.body + [.],
-    // )
-
-    // #grid(
-    //     columns: (1fr, 1fr),
-    //     align(center)[
-    //     Therese Tungsten \
-    //     Artos Institute \
-    //     #link("mailto:tung@artos.edu")
-    //     ],
-    //     align(center)[
-    //     Dr. John Doe \
-    //     Artos Institute \
-    //     #link("mailto:doe@artos.edu")
-    //     ]
-    // )
-
 }
 
 #let prob = counter("problem")
@@ -116,11 +87,15 @@
 }
 
 #let proof(content) = {
-    rect(fill: rgb("#eef8ff"))[
+    block(
+        fill: rgb("#c5e5fc6f"),
+        radius: 4pt,
+        inset: 8pt
+    )[
         #text(style: "italic", [
-        Proof.
+            Proof.
         ])
-        #content \
+        #content
         #h(1fr) $square.stroked$
     ]
 }
@@ -139,11 +114,16 @@
 }
 
 #let ans(content) = {
-    rect(fill: rgb("#ffffff"))[
+    block(
+        fill: rgb("#d0edcb6f"),
+        radius: 4pt,
+        inset: 8pt,
+        width: 100%
+    )[
         #text(style: "italic", [
-        Answer.
+            Answer.
         ])
-        #content #h(1fr)
+        #content
     ]
 }
 
@@ -173,40 +153,3 @@
 #let fake-italic(body) = skew(-12deg, body)
 
 #let shadowed(body) = box(place(skew(-50deg, vscale: 0.8, text(fill: luma(200), body))) + place(body)) // TODO: fix shadowed 错位问题
-
-/* Usage: create another file, e.g. hw1.typ, and write the following content:
-```
-#import "conf.typ": conf, problem, blockquote, proof
-
-#show: doc => conf(
-    course: [course name],
-    homework: [Homework 1/2/3/4/],
-    due_time: [Sep 16/17/18, 2024],
-    instructor: [someone],
-    student: [you],
-    id: [id],
-    doc,
-)
-```
-Then you can write the problems in the homework like this:
-```
-#problem(name: [name])[
-    #lorem(20)
-    something
-]
-```
-or
-```
-#problem(name: "dsad")[
-    #lorem(30)
-    something
-]
-```
-or you dont need to specify the name:
-```
-#problem[
-    #lorem(50)
-    something
-]
-```
-*/
