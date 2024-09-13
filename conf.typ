@@ -86,6 +86,7 @@
     block(
         fill: luma(94.12%),
         width: 100%,
+        inset: 10pt,
         stroke: (left: 0.25em)
     )[
         #content
@@ -101,7 +102,7 @@
         #text(style: "italic", [
             Proof.
         ])
-        #content \
+        #content
         #h(1fr) $square.stroked$
     ]
 }
@@ -132,7 +133,7 @@
         #text(style: "italic", [
             Answer.
         ])
-        #content #h(1fr)
+        #content
     ]
 }
 
