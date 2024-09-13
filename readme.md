@@ -1,6 +1,11 @@
-Usage: create another file, e.g. hw1.typ, and write the following content:
-```
-#import "conf.typ": conf, problem, blockquote, proof
+# Assignment template based on Typst
+
+## Basic usage
+
+Create another file, e.g. hw1.typ, import this template and config basic information.
+
+```typ
+#import "conf.typ": *
 
 #show: doc => conf(
     course: [course name],
@@ -12,23 +17,36 @@ Usage: create another file, e.g. hw1.typ, and write the following content:
     doc,
 )
 ```
-Then you can write the problems in the homework like this:
-```
-#problem(name: [name])[
+
+Then write problems in homework like this:
+
+```typ
+#problem(name: [name])[     // or #problem(name: "name")
     #lorem(20)
     something
 ]
 ```
-or
-```
-#problem(name: "dsad")[
-    #lorem(30)
+
+or number the problems automatically:
+
+```typ
+#problem[
+    #lorem(50)
     something
 ]
 ```
-or you dont need to specify the name:
+
+## Other useful functions
+
+```typ
+#proof[                     // #proof(color: blue)[...]
+    #lorem(50)
+    something
+]
 ```
-#problem[
+
+```typ
+#ans[                       // #ans(color: red)[...]
     #lorem(50)
     something
 ]

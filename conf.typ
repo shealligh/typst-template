@@ -61,38 +61,11 @@
     }
 
     show raw.where(block: true): block.with(
-        fill: rgb("#fbe6e3"),
-        inset: 10pt,
-        // radius: 5pt,
+        fill: luma(200, 40%),
+        inset: 10pt
     )
 
     doc
-
-    // show heading.where(level: 1): it => block(width: 100%)[
-    //     #set align(center)
-    //     #set text(size: 12pt, weight: "regular")
-    //     #block(smallcaps(it.body))
-    // ]
-    // show heading.where(level: 2): it => text(
-    //     size: 11pt,
-    //     weight: "regular",
-    //     style: "italic",
-    //     it.body + [.],
-    // )
-
-    // #grid(
-    //     columns: (1fr, 1fr),
-    //     align(center)[
-    //     Therese Tungsten \
-    //     Artos Institute \
-    //     #link("mailto:tung@artos.edu")
-    //     ],
-    //     align(center)[
-    //     Dr. John Doe \
-    //     Artos Institute \
-    //     #link("mailto:doe@artos.edu")
-    //     ]
-    // )
 
 }
 
@@ -110,15 +83,23 @@
 }
 
 #let blockquote(content) = {
-    rect(fill: luma(94.12%), stroke: (left: 0.25em))[
+    block(
+        fill: luma(94.12%),
+        width: 100%,
+        stroke: (left: 0.25em)
+    )[
         #content
     ]
 }
 
 #let proof(content) = {
-    rect(fill: rgb("#eef8ff"))[
+    block(
+        fill: rgb("#eef8ff"),
+        width: 100%,
+        inset: 10pt
+    )[
         #text(style: "italic", [
-        Proof.
+            Proof.
         ])
         #content \
         #h(1fr) $square.stroked$
@@ -132,16 +113,24 @@
     if name != none {
         name = text[(#name)]
     }
-    rect(fill: rgb("#eeffee"))[
+    block(
+        fill: rgb("#eeffee"),
+        width: 100%,
+        inset: 10pt
+    )[
         #text(weight: "bold")[Theorem #theo.display()]
         #text[#name. #content]
     ]
 }
 
 #let ans(content) = {
-    rect(fill: rgb("#ffffff"))[
+    block(
+        fill: rgb("#ffffff"),
+        width: 100%,
+        inset: 10pt
+    )[
         #text(style: "italic", [
-        Answer.
+            Answer.
         ])
         #content #h(1fr)
     ]
@@ -173,40 +162,3 @@
 #let fake-italic(body) = skew(-12deg, body)
 
 #let shadowed(body) = box(place(skew(-50deg, vscale: 0.8, text(fill: luma(200), body))) + place(body)) // TODO: fix shadowed 错位问题
-
-/* Usage: create another file, e.g. hw1.typ, and write the following content:
-```
-#import "conf.typ": conf, problem, blockquote, proof
-
-#show: doc => conf(
-    course: [course name],
-    homework: [Homework 1/2/3/4/],
-    due_time: [Sep 16/17/18, 2024],
-    instructor: [someone],
-    student: [you],
-    id: [id],
-    doc,
-)
-```
-Then you can write the problems in the homework like this:
-```
-#problem(name: [name])[
-    #lorem(20)
-    something
-]
-```
-or
-```
-#problem(name: "dsad")[
-    #lorem(30)
-    something
-]
-```
-or you dont need to specify the name:
-```
-#problem[
-    #lorem(50)
-    something
-]
-```
-*/
