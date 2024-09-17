@@ -64,6 +64,7 @@
         fill: luma(200, 40%),
         inset: 10pt
     )
+    show raw: text.with(font: "Monaco")
 
     doc
 
