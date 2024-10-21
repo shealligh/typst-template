@@ -1,4 +1,8 @@
-# Assignment template based on Typst
+<div align="center">
+
+![Typst-template](https://socialify.git.ci/shealligh/typst-template/image?description=1&descriptionEditable=A%20template%20written%20in%20Typst%21&font=Jost&forks=1&issues=1&logo=https%3A%2F%2Fstatic.live.moe%2Flagrange.jpg&name=1&pattern=Diagonal%20Stripes&pulls=1&stargazers=1&theme=Auto)
+
+</div>
 
 ## Basic usage
 

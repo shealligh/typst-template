@@ -2,7 +2,7 @@
     course: none,
     homework: [],
     due_time: [],
-    instructor: [],
+    instructor: none,
     student: [],
     id: [],
     doc
@@ -15,13 +15,30 @@
 
     set align(center)
 
+    set page(
+        paper: "a4",
+        header: [
+            #set text(10pt)
+            #smallcaps[#student]
+            #h(1fr) #homework
+        ],
+        numbering: "1 / 1",
+        // background: rotate(24deg,
+        //     text(18pt, fill: rgb("FFCBC4"))[
+        //         #student
+        //     ]
+        // )
+    )
+
     text(22pt, weight: "bold", [
         #course: #homework
     ])
 
-    align(center, text(12pt, [
-        Instructed by #text(style: "italic", instructor)
-    ]))
+    if instructor != none {
+        align(center, text(12pt, [
+            Instructed by #text(style: "italic", instructor)
+        ]))
+    }
 
     align(center, text(10pt, [
         Due on #text(style: "italic", due_time)
@@ -31,26 +48,34 @@
         \ #student #h(1cm) #id
     ]))
 
-    set page(
-        paper: "a4",
-        header: [
-            #set text(10pt)
-            #smallcaps[#student]
-            #h(1fr) #homework
-        ],
-        numbering: "1 / 1",
-        background: rotate(24deg,
-            text(18pt, fill: rgb("FFCBC4"))[
-                #student
-            ]
-        )
-    )
+    
 
     set par(justify: true)
 
     set align(left)
 
     // show: rest => columns(2, rest)
+
+    // show ref: it => {
+    //     let eq = math.equation
+    //     let el = it.element
+    //     if el != none and el.func() == eq {
+    //     // Override equation references.
+    //     numbering(
+    //         el.numbering,
+    //         ..counter(eq).at(el.location())
+    //     )
+    //     } else {
+    //     // Other references as usual.
+    //     it
+    //     }
+    // }
+
+    set math.equation(
+        block: true,
+        numbering: "(1)",
+        number-align: bottom
+    )
 
     show math.equation.where(block: false): it => {
         if it.has("label") and it.label == label("displayed-inline-math-equation") {
@@ -71,14 +96,28 @@
 }
 
 #let prob = counter("problem")
+#let subprob = counter("subproblem")
 
 #let problem(name: none, content) = {
     prob.step()
+    subprob.update(n => 0)
     if name != none {
         align(left, text(16pt, weight: "bold")[#name])
     }
     else {
         align(left, text(16pt, weight: "bold")[Problem #prob.display()])
+    }
+    align(left, content)
+}
+
+
+#let subproblem(name: none, content) = {
+    subprob.step()
+    if name != none {
+        align(left, text(12pt, weight: "bold")[#name])
+    }
+    else {
+        align(left, text(12pt, weight: "bold")[#prob.display().#subprob.display()])
     }
     align(left, content)
 }
