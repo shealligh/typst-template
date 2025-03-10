@@ -10,6 +10,7 @@
 
     set text(
         font: ("New Computer Modern", "Yuppy SC"),
+        // font: ("New Computer Modern", "Kaiti SC"),
         size: 10pt
     )
 
@@ -72,10 +73,11 @@
     // }
 
     set math.equation(
-        block: true,
         numbering: "(1)",
-        number-align: bottom
+        number-align: end + bottom
     )
+
+    show math.equation: set block(breakable: true)
 
     show math.equation.where(block: false): it => {
         if it.has("label") and it.label == label("displayed-inline-math-equation") {
@@ -98,7 +100,7 @@
 #let prob = counter("problem")
 #let subprob = counter("subproblem")
 
-#let problem(name: none, content) = {
+#let problem(name: none, content) = context {
     prob.step()
     subprob.update(n => 0)
     if name != none {
@@ -111,7 +113,7 @@
 }
 
 
-#let subproblem(name: none, content) = {
+#let subproblem(name: none, content) = context {
     subprob.step()
     if name != none {
         align(left, text(12pt, weight: "bold")[#name])
@@ -203,3 +205,6 @@
 #let fake-italic(body) = skew(-12deg, body)
 
 #let shadowed(body) = box(place(skew(-50deg, vscale: 0.8, text(fill: luma(200), body))) + place(body)) // TODO: fix shadowed 错位问题
+
+// #let argmin(body) = (arg min) body // TODO
+// #let langle rangle = angle.l angle.r // TODO
